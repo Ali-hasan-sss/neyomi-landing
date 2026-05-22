@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "faqs": "FAQs",
+    "about": "Über uns",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "login": "Anmelden",
+    "getStarted": "Loslegen"
+  },
+  "hero": {
+    "kicker": "Neyome",
+    "titleA": "Familienaufgaben & Belohnungen —",
+    "titleB": " auf spielerische Art",
+    "sub": "Aufgaben zuweisen, Gewohnheiten aufbauen und Kinder Punkte für elterlich genehmigte Belohnungen einlösen lassen — ohne tägliches Nörgeln.",
+    "ctaPrimary": "Loslegen",
+    "ctaSecondary": "So funktioniert's",
+    "badge": {
+      "multi": "Mehrsprachig",
+      "apps": "iOS & Android",
+      "control": "Elternkontrolle",
+      "streaks": "Serien & Gewohnheiten"
+    },
+    "social": "Von vielbeschäftigten Eltern geliebt"
+  },
+  "how": {
+    "title": "So funktioniert's",
+    "sub": "Ein einfacher Ablauf, der Routinen ohne Nörgeln am Laufen hält.",
+    "steps": [
+      { "title": "Familie anlegen", "body": "Eltern und Kinder mit wenigen Klicks einladen." },
+      { "title": "Aufgaben hinzufügen", "body": "Vorlagen nutzen oder eigene Aufgaben & Gewohnheiten erstellen." },
+      { "title": "Kinder sammeln Punkte", "body": "Sie erledigen Aufgaben und bauen Serien auf." },
+      { "title": "Belohnungen einlösen", "body": "Kinder beantragen; Eltern prüfen & genehmigen." }
+    ]
+  },
+  "sections": {
+    "featuresTitle": "Warum Familien Neyome lieben",
+    "contactTitle": "Bleib auf dem Laufenden",
+    "contactButton": "Benachrichtige mich"
+  },
+  "features": {
+    "items": {
+      "templates": { "title": "Aufgabenvorlagen", "desc": "Schnell altersgerechte Aufgaben zuweisen." },
+      "points": { "title": "Punkte & Belohnungen", "desc": "Kinder sammeln Punkte; du steuerst die Belohnungen." },
+      "streaks": { "title": "Serien & Gewohnheiten", "desc": "Mit Serien und Fortschritt motivieren." },
+      "approvals": { "title": "Freigaben", "desc": "Eltern genehmigen beantragte Belohnungen." },
+      "notifications": { "title": "Kluge Erinnerungen", "desc": "Kluge Erinnerungen, die wirklich helfen." },
+      "multilang": { "title": "Mehrsprachig", "desc": "Sprachen jederzeit wechseln." }
+    },
+    "bullets": {
+      "smooth": "Flüssig auch auf leistungsschwachen Laptops",
+      "offline": "Funktioniert offline, wenn JSON in /public liegt",
+      "playful": "Passt zum verspielten Stil der App"
+    }
+  },
+  "contact": {
+    "inputPlaceholder": "du@beispiel.de",
+    "success": "Du bist auf der Liste! Wir benachrichtigen dich beim Start.",
+    "submitting": "Wird gesendet…",
+    "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+  },
+  "stats": {
+    "tasks": "Erledigte Aufgaben",
+    "points": "Gesammelte Punkte",
+    "organized": "Eltern fühlen sich organisierter"
+  },
+  "testimonials": {
+    "title": "Was Eltern sagen",
+    "items": [
+      { "name": "Hanna", "quote": "Meine Kinder fragen tatsächlich nach Aufgaben. Magie." },
+      { "name": "Daniel", "quote": "Der Genehmigung + Belohnungen-Flow ist perfekt für uns." },
+      { "name": "Eva", "quote": "Endlich eine saubere, ruhige UI, die unsere Familie nutzen kann." }
+    ]
+  },
+  "pricing": {
+    "title": "Einfaches Preismodell",
+    "subtitle": "Starte heute mit 1 Monat kostenlos. Jederzeit kündbar.",
+    "perMonth": "/Mon.",
+    "badge": { "trial": "1 Monat gratis" },
+    "trialNote": "Enthält 1 Monat kostenlosen Test",
+    "plans": {
+      "free": { "title": "Free" },
+      "pro": { "title": "Pro" },
+      "family": { "title": "Family+" }
+    },
+    "features": {
+      "oneFamily": "Bis zu 1 Familie",
+      "basicTasks": "Grundlegende Aufgaben & Belohnungen",
+      "notifications": "Benachrichtigungen",
+      "unlimitedMembers": "Unbegrenzte Mitglieder",
+      "advancedStreaks": "Erweiterte Serien",
+      "prioritySupport": "Priorisierter Support",
+      "multipleFamilies": "Mehrere Familien",
+      "sharedCatalog": "Gemeinsamer Belohnungskatalog",
+      "earlyAccess": "Früher Zugriff auf Funktionen"
+    },
+    "cta": {
+      "startFree": "Kostenlos starten",
+      "upgrade": "Upgrade",
+      "contact": "Kontakt"
+    }
+  },
+  "faqs": {
+    "title": "Häufige Fragen"
+  },
+  "footer": {
+    "about": "Über uns",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "faqs": "FAQs"
+  }
+}

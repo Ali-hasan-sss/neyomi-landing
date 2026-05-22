@@ -1,0 +1,26 @@
+{
+    "name": "neyome-landing",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@lottiefiles/react-lottie-player": "3.6.0",
+        "firebase": "^12.4.0",
+        "framer-motion": "^12.38.0",
+        "next": "14.2.5",
+        "next-intl": "^4.12.0",
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
+    },
+    "devDependencies": {
+        "@types/react": "19.2.2",
+        "autoprefixer": "10.4.19",
+        "postcss": "8.4.38",
+        "tailwindcss": "3.4.10",
+        "typescript": "5.4.5"
+    }
+}

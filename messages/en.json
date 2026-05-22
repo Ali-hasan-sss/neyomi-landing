@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "faqs": "FAQs",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "login": "Login",
+    "getStarted": "Get started"
+  },
+  "hero": {
+    "kicker": "Neyome",
+    "titleA": "Family tasks & rewards —",
+    "titleB": " the fun way",
+    "sub": "Assign chores, build habits, and let kids redeem points for parent-approved rewards — without the daily nagging.",
+    "ctaPrimary": "Get Started",
+    "ctaSecondary": "How it works",
+    "badge": {
+      "multi": "Multi-language",
+      "apps": "iOS & Android",
+      "control": "Parental control",
+      "streaks": "Streaks & habits"
+    },
+    "social": "Loved by busy parents"
+  },
+  "how": {
+    "title": "How it works",
+    "sub": "A simple flow that keeps routines moving without nagging.",
+    "steps": [
+      { "title": "Create a family", "body": "Invite parents and kids in a few taps." },
+      { "title": "Add tasks", "body": "Use templates or make your own chores & habits." },
+      { "title": "Kids earn points", "body": "They complete tasks and grow streaks." },
+      { "title": "Redeem rewards", "body": "Kids claim; parents review & approve." }
+    ]
+  },
+  "sections": {
+    "featuresTitle": "Why families love Neyome",
+    "contactTitle": "Stay in the loop",
+    "contactButton": "Notify me"
+  },
+  "features": {
+    "items": {
+      "templates": { "title": "Task templates", "desc": "Quickly assign age-appropriate chores." },
+      "points": { "title": "Points & rewards", "desc": "Kids earn points; you control rewards." },
+      "streaks": { "title": "Streaks & habits", "desc": "Motivate with streaks and progress." },
+      "approvals": { "title": "Approvals", "desc": "Parents approve claimed rewards." },
+      "notifications": { "title": "Smart reminders", "desc": "Smart reminders that actually help." },
+      "multilang": { "title": "Multi-language", "desc": "Switch languages anytime." }
+    },
+    "bullets": {
+      "smooth": "Smooth on low-power laptops",
+      "offline": "Works offline if JSON in /public",
+      "playful": "Matches app's playful style"
+    }
+  },
+  "contact": {
+    "inputPlaceholder": "you@example.com",
+    "success": "You're on the list! We'll notify you at launch.",
+    "submitting": "Sending…",
+    "error": "Something went wrong. Please try again."
+  },
+  "stats": {
+    "tasks": "Tasks completed",
+    "points": "Points earned",
+    "organized": "Parents feel more organized"
+  },
+  "testimonials": {
+    "title": "What parents are saying",
+    "items": [
+      { "name": "Hanna", "quote": "My kids actually ask for chores now. Magic." },
+      { "name": "Daniel", "quote": "The approval + rewards flow is perfect for us." },
+      { "name": "Eva", "quote": "Finally a clean, calm UI my family can use." }
+    ]
+  },
+  "pricing": {
+    "title": "Simple pricing",
+    "subtitle": "Start today with a 1-month free trial. Cancel anytime.",
+    "perMonth": "/mo",
+    "badge": { "trial": "1-month free" },
+    "trialNote": "Includes 1-month free trial",
+    "plans": {
+      "free": { "title": "Free" },
+      "pro": { "title": "Pro" },
+      "family": { "title": "Family+" }
+    },
+    "features": {
+      "oneFamily": "Up to 1 family",
+      "basicTasks": "Basic tasks & rewards",
+      "notifications": "Notifications",
+      "unlimitedMembers": "Unlimited members",
+      "advancedStreaks": "Advanced streaks",
+      "prioritySupport": "Priority support",
+      "multipleFamilies": "Multiple families",
+      "sharedCatalog": "Shared rewards catalog",
+      "earlyAccess": "Early access features"
+    },
+    "cta": {
+      "startFree": "Start free",
+      "upgrade": "Upgrade",
+      "contact": "Contact"
+    }
+  },
+  "faqs": {
+    "title": "Support FAQs"
+  },
+  "footer": {
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "faqs": "FAQs"
+  }
+}
