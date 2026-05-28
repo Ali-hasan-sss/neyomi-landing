@@ -4,6 +4,7 @@ import { Link, usePathname } from '@/navigation'
 import LangSwitcher from './LangSwitcher'
 import ThemeToggle from './ThemeToggle'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function Header() {
   const t = useTranslations('nav')
@@ -23,7 +24,14 @@ export default function Header() {
       <div className="container">
         <div className="nav">
           <Link href="/" className="brand">
-            <img src="/Neyome_logo.png" alt="Neyome" className="h-20 w-auto" />
+            <Image 
+              src="/Neyome_logo.png" 
+              alt="Neyome" 
+              width={80} 
+              height={80}
+              className="h-20 w-auto"
+              priority
+            />
           </Link>
 
           <div className="links">

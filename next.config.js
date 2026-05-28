@@ -8,6 +8,18 @@ const nextConfig = {
   // DevTools browser extension throws "Missing ActionQueueContext" and crashes
   // the router. Re-enable after upgrading to Next.js 15+.
   reactStrictMode: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'neyome.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.neyome.com',
+      },
+    ],
+  },
 }
 
 module.exports = withNextIntl(nextConfig)
