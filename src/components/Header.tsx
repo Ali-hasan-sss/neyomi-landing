@@ -3,16 +3,28 @@ import { useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/navigation'
 import LangSwitcher from './LangSwitcher'
 import ThemeToggle from './ThemeToggle'
+import { useState, useEffect } from 'react'
 
 export default function Header() {
   const t = useTranslations('nav')
   const pathname = usePathname()
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <header className="header">
+    <header className={`header ${isScrolled ? 'backdrop-blur-md bg-white/70 dark:bg-gray-900/70' : ''}`}>
       <div className="container">
         <div className="nav">
-          <Link href="/" className="brand">Neyome</Link>
+          <Link href="/" className="brand">
+            <img src="/Neyome_logo.png" alt="Neyome" className="h-20 w-auto" />
+          </Link>
 
           <div className="links">
             <Link
@@ -22,26 +34,26 @@ export default function Header() {
               {t('about')}
             </Link>
             <Link
-              href="/features"
-              className={`link ${pathname === '/features' ? 'font-extrabold' : ''}`}
+              href="/#features"
+              className={`link ${pathname === '/' ? 'font-extrabold' : ''}`}
             >
               {t('features')}
             </Link>
 
             <span className="sep" />
 
-            <a href="#pricing" className="link">{t('pricing')}</a>
-            <a href="#faqs" className="link">{t('faqs')}</a>
+            <Link href="/#pricing" className="link">{t('pricing')}</Link>
+            <Link href="/#faqs" className="link">{t('faqs')}</Link>
 
             <LangSwitcher />
             <ThemeToggle />
 
-            <a href="#contact" className="btn btn-pill btn-glass">
+            <Link href="/#contact" className="btn btn-pill btn-glass">
               {t('login')}
-            </a>
-            <a href="#contact" className="btn btn-pill btn-primary">
+            </Link>
+            <Link href="/#contact" className="btn btn-pill btn-primary">
               {t('getStarted')}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

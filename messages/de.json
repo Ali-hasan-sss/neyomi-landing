@@ -11,9 +11,9 @@
   },
   "hero": {
     "kicker": "Neyome",
-    "titleA": "Familienaufgaben & Belohnungen —",
+    "titleA": "Gruppenaufgaben & Belohnungen —",
     "titleB": " auf spielerische Art",
-    "sub": "Aufgaben zuweisen, Gewohnheiten aufbauen und Kinder Punkte für elterlich genehmigte Belohnungen einlösen lassen — ohne tägliches Nörgeln.",
+    "sub": "Aufgaben zuweisen, Gewohnheiten aufbauen und Mitglieder Punkte für admin-genehmigte Belohnungen einlösen lassen — ohne tägliches Nörgeln.",
     "ctaPrimary": "Loslegen",
     "ctaSecondary": "So funktioniert's",
     "badge": {
@@ -28,14 +28,14 @@
     "title": "So funktioniert's",
     "sub": "Ein einfacher Ablauf, der Routinen ohne Nörgeln am Laufen hält.",
     "steps": [
-      { "title": "Familie anlegen", "body": "Eltern und Kinder mit wenigen Klicks einladen." },
+      { "title": "Gruppe anlegen", "body": "Mitglieder mit wenigen Klicks einladen — Familien, Schulklassen, Sportmannschaften, Musikgruppen, etc." },
       { "title": "Aufgaben hinzufügen", "body": "Vorlagen nutzen oder eigene Aufgaben & Gewohnheiten erstellen." },
-      { "title": "Kinder sammeln Punkte", "body": "Sie erledigen Aufgaben und bauen Serien auf." },
-      { "title": "Belohnungen einlösen", "body": "Kinder beantragen; Eltern prüfen & genehmigen." }
+      { "title": "Mitglieder sammeln Punkte", "body": "Sie erledigen Aufgaben und bauen Serien auf." },
+      { "title": "Belohnungen einlösen", "body": "Mitglieder beantragen; Admins prüfen & genehmigen." }
     ]
   },
   "sections": {
-    "featuresTitle": "Warum Familien Neyome lieben",
+    "featuresTitle": "Warum Gruppen Neyome lieben",
     "contactTitle": "Bleib auf dem Laufenden",
     "contactButton": "Benachrichtige mich"
   },
@@ -44,7 +44,8 @@
       "templates": { "title": "Aufgabenvorlagen", "desc": "Schnell altersgerechte Aufgaben zuweisen." },
       "points": { "title": "Punkte & Belohnungen", "desc": "Kinder sammeln Punkte; du steuerst die Belohnungen." },
       "streaks": { "title": "Serien & Gewohnheiten", "desc": "Mit Serien und Fortschritt motivieren." },
-      "approvals": { "title": "Freigaben", "desc": "Eltern genehmigen beantragte Belohnungen." },
+      "approvals": { "title": "Freigaben", "desc": "Admins genehmigen beantragte Belohnungen." },
+      "secureChat": { "title": "Sicherer Chat", "desc": "Ende-zu-Ende-verschlüsselte Nachrichten. Niemand hat Zugriff auf Ihre Chats — nicht einmal Entwickler." },
       "notifications": { "title": "Kluge Erinnerungen", "desc": "Kluge Erinnerungen, die wirklich helfen." },
       "multilang": { "title": "Mehrsprachig", "desc": "Sprachen jederzeit wechseln." }
     },
@@ -82,18 +83,19 @@
     "plans": {
       "free": { "title": "Free" },
       "pro": { "title": "Pro" },
-      "family": { "title": "Family+" }
+      "family": { "title": "Gruppe+" }
     },
     "features": {
-      "oneFamily": "Bis zu 1 Familie",
+      "oneFamily": "Bis zu 1 Gruppe",
       "basicTasks": "Grundlegende Aufgaben & Belohnungen",
       "notifications": "Benachrichtigungen",
       "unlimitedMembers": "Unbegrenzte Mitglieder",
       "advancedStreaks": "Erweiterte Serien",
       "prioritySupport": "Priorisierter Support",
-      "multipleFamilies": "Mehrere Familien",
+      "multipleFamilies": "Mehrere Gruppen (Schule, Sport, Musik, etc.)",
       "sharedCatalog": "Gemeinsamer Belohnungskatalog",
-      "earlyAccess": "Früher Zugriff auf Funktionen"
+      "earlyAccess": "Früher Zugriff auf Funktionen",
+      "secureChat": "Sicherer Ende-zu-Ende-verschlüsselter Chat"
     },
     "cta": {
       "startFree": "Kostenlos starten",

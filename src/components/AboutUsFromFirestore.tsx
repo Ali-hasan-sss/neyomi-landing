@@ -17,7 +17,7 @@ function CardItem({ card, locale }: { card: AboutUsCard; locale: string }) {
   const glyph = ICON_MAP[card.icon ?? ''] ?? '✨';
 
   return (
-    <div className="card">
+    <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">
       <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
         <div style={{
           width:36, height:36, borderRadius:10,
@@ -52,10 +52,10 @@ export default function AboutUsFromFirestore() {
       <div className="container stack">
         <h1 className="h1">{locale === 'de' ? 'Über uns' : locale === 'ar' ? 'من نحن' : 'About Us'}</h1>
         {loading && !data ? (
-          <div className="card">Loading…</div>
+          <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">Loading…</div>
         ) : (
           <>
-            <article className="card" dangerouslySetInnerHTML={{ __html: sanitizeHtml(body) }} />
+            <article className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70" dangerouslySetInnerHTML={{ __html: sanitizeHtml(body) }} />
             {data?.cards?.length ? (
               <div className="features-grid">
                 {data.cards.map((c) => (

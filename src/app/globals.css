@@ -26,16 +26,24 @@ html { scroll-behavior: smooth; }
 }
 
 /* ───────── base layout ───────── */
-body { background: var(--bg); color: var(--text); }
+body { 
+  background: var(--bg); 
+  color: var(--text); 
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-size: calc(1rem + 0.3rem);
+}
+html[lang="ar"] body {
+  font-family: var(--font-cairo), system-ui, -apple-system, sans-serif;
+}
 .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 .section { scroll-margin-top: 84px; padding: 64px 0; }
 .hero { padding-top: 108px; }
 
 /* Headings / hierarchy */
-.h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.06; font-weight: 900; }
-.h2 { font-size: clamp(1.5rem, 3.3vw, 2rem); line-height: 1.15; font-weight: 800; margin: 0 0 14px; }
-.h3 { font-size: 1.25rem; font-weight: 800; }
-.section-title-lg { font-size: clamp(1.8rem, 4vw, 2.25rem); font-weight: 900; }
+.h1 { font-size: clamp(calc(2rem + 0.3rem), 5vw, calc(3rem + 0.3rem)); line-height: 1.06; font-weight: 900; }
+.h2 { font-size: clamp(calc(1.5rem + 0.3rem), 3.3vw, calc(2rem + 0.3rem)); line-height: 1.15; font-weight: 800; margin: 0 0 14px; }
+.h3 { font-size: calc(1.25rem + 0.3rem); font-weight: 800; }
+.section-title-lg { font-size: clamp(calc(1.8rem + 0.3rem), 4vw, calc(2.25rem + 0.3rem)); font-weight: 900; }
 
 /* Section variants & stacks */
 .section.alt { background: color-mix(in oklab, var(--bg) 94%, #fff); }
@@ -130,7 +138,7 @@ body { background: var(--bg); color: var(--text); }
 .hero-sub {
   margin: 0;
   color: var(--muted);
-  font-size: clamp(1rem, 2.2vw, 1.125rem);
+  font-size: clamp(calc(1rem + 0.3rem), 2.2vw, calc(1.125rem + 0.3rem));
   max-width: 760px;
 }
 .badge-row {
@@ -190,7 +198,7 @@ body { background: var(--bg); color: var(--text); }
 .how-sub {
   margin: 0;
   color: var(--muted);
-  font-size: clamp(1rem, 2.1vw, 1.125rem);
+  font-size: clamp(calc(1rem + 0.3rem), 2.1vw, calc(1.125rem + 0.3rem));
   max-width: 720px;
 }
 /* Steps grid */
@@ -253,8 +261,8 @@ body { background: var(--bg); color: var(--text); }
   border-radius: 16px; overflow: hidden;
   background: color-mix(in oklab, var(--bg) 96%, #fff);
 }
-.feature-copy h3 { margin: 0 0 6px; font-size: clamp(1.3rem, 2.8vw, 1.5rem); }
-.feature-copy p  { margin: 0 0 10px; color: var(--muted); font-size: 1rem; }
+.feature-copy h3 { margin: 0 0 6px; font-size: clamp(calc(1.3rem + 0.3rem), 2.8vw, calc(1.5rem + 0.3rem)); }
+.feature-copy p  { margin: 0 0 10px; color: var(--muted); font-size: calc(1rem + 0.3rem); }
 .bullets { display: grid; gap: 6px; color: color-mix(in oklab, var(--text) 84%, #000); }
 
 /* ───────── stats / counters ───────── */
@@ -264,14 +272,14 @@ body { background: var(--bg); color: var(--text); }
   border: 1px solid var(--border);
   border-radius: 16px; padding: 22px; text-align: center;
 }
-.num { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 900; line-height: 1; }
+.num { font-size: clamp(calc(2rem + 0.3rem), 4.5vw, calc(3rem + 0.3rem)); font-weight: 900; line-height: 1; }
 .label { color: var(--muted); }
 
 /* ───────── testimonials / pricing / faqs ───────── */
 .testimonials-wrap { display: grid; gap: 16px; }
 .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .testi-card { padding: 20px; }
-.testi-quote { font-size: clamp(1.05rem, 2.4vw, 1.2rem); line-height: 1.7; }
+.testi-quote { font-size: clamp(calc(1.05rem + 0.3rem), 2.4vw, calc(1.2rem + 0.3rem)); line-height: 1.7; }
 .testi-foot { margin-top: 8px; color: var(--muted); font-weight: 800; }
 
 .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -284,7 +292,7 @@ body { background: var(--bg); color: var(--text); }
 :root.dark .card { background: color-mix(in oklab, var(--bg) 96%, transparent); }
 .card.highlight { outline: 2px solid color-mix(in oklab, var(--indigo) 35%, var(--border)); }
 
-.price { font-size: 32px; font-weight: 900; }
+.price { font-size: calc(32px + 4.8px); font-weight: 900; }
 .price .muted { font-size: 14px; font-weight: 700; opacity: .75; margin-left: 4px; }
 
 /* FAQs list & fancy cards */
@@ -293,7 +301,7 @@ body { background: var(--bg); color: var(--text); }
 .faq-item[open] .faq-a { margin-top: 8px; }
 .faq-item summary.faq-q { list-style: none; cursor: pointer; font-weight: 800; padding: 4px 0; }
 .faq-item summary::-webkit-details-marker{ display:none; }
-.faq-a .faq-a-text { font-size: 1rem; color: var(--muted); }
+.faq-a .faq-a-text { font-size: calc(1rem + 0.3rem); color: var(--muted); }
 
 /* gradient-border with radius for FAQ items (and reusable) */
 .gradient-border {

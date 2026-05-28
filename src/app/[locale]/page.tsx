@@ -61,6 +61,13 @@ export default async function HomePage({ params }: { params: { locale: string } 
               text={t('features.items.notifications.desc')}
               animationKey="chores"
             />
+
+            <LottieFeature
+              side="left"
+              title={t('features.items.secureChat.title')}
+              text={t('features.items.secureChat.desc')}
+              animationKey="rewards"
+            />
           </div>
         </section>
 

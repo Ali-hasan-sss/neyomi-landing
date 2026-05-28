@@ -2,23 +2,35 @@
 
 import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
-import { PolicyDoc, getPolicy, listenPolicy } from '@/lib/firebase/content';
+import { getPage } from '@/lib/api';
 import { sanitizeHtml } from '@/lib/sanitize';
 
 export default function PolicyFromFirestore({ type }: { type: 'privacy' | 'terms' }) {
   const locale = useLocale();
-  const [data, setData] = useState<PolicyDoc | null>(null);
+  const [data, setData] = useState<{ title: string; body: string; version?: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let unsub: (() => void) | null = null;
     setLoading(true);
-    getPolicy(type).then((d) => { setData(d); setLoading(false); });
-    unsub = listenPolicy(type, (d) => setData(d));
-    return () => { unsub && unsub(); };
-  }, [type]);
+    setError(null);
+    getPage(type, locale).then((pageData) => {
+      if (pageData) {
+        setData({
+          title: pageData.title,
+          body: pageData.body,
+          version: pageData.version,
+        });
+      }
+      setLoading(false);
+    }).catch((error) => {
+      console.error(`Error fetching ${type} page:`, error);
+      setError(error instanceof Error ? error.message : 'Failed to load page');
+      setLoading(false);
+    });
+  }, [type, locale]);
 
-  const block = data?.locales?.[locale] ?? data?.locales?.en ?? { title: '', body: '' };
+  const block = data || { title: '', body: '' };
 
   return (
     <section className="section">
@@ -28,18 +40,21 @@ export default function PolicyFromFirestore({ type }: { type: 'privacy' | 'terms
           : (locale==='de' ? 'Nutzungsbedingungen' : locale==='ar' ? 'الشروط والأحكام' : 'Terms & Conditions'))}
         </h1>
 
-        {data?.version || data?.updatedAt ? (
+        {data?.version ? (
           <div className="label" style={{ opacity:.8 }}>
-            {data.version ? `Version ${data.version}` : null}
-            {data.version && data.updatedAt ? ' • ' : ''}
-            {data.updatedAt ? `Updated ${new Date(data.updatedAt.seconds ? data.updatedAt.seconds*1000 : data.updatedAt).toLocaleDateString()}` : ''}
+            Version {data.version}
           </div>
         ) : null}
 
         {loading && !data ? (
-          <div className="card">Loading…</div>
+          <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">Loading…</div>
+        ) : error ? (
+          <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">
+            <p className="text-red-500 font-semibold">Error: {error}</p>
+            <p className="text-sm mt-2 opacity-70">Please ensure NEXT_PUBLIC_API_URL is configured in .env.local</p>
+          </div>
         ) : (
-          <article className="card" dangerouslySetInnerHTML={{ __html: sanitizeHtml(block.body || '') }} />
+          <article className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70" dangerouslySetInnerHTML={{ __html: sanitizeHtml(block.body || '') }} />
         )}
       </div>
     </section>

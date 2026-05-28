@@ -37,6 +37,7 @@ export default function Pricing() {
         t('features.unlimitedMembers'),
         t('features.advancedStreaks'),
         t('features.prioritySupport'),
+        t('features.secureChat'),
       ],
       ctaKey: 'cta.upgrade',
     },

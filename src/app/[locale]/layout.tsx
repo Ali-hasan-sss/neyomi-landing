@@ -4,7 +4,21 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { locales, type Locale } from '@/i18n/config'
 import BouncingBalls from '@/components/BouncingBalls'
+import { Cairo } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import '../globals.css'
+
+const cairo = Cairo({ 
+  subsets: ['arabic'],
+  variable: '--font-cairo',
+  display: 'swap',
+})
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 const META: Record<Locale, { title: string; description: string }> = {
   en: {
@@ -76,6 +90,7 @@ export default async function LocaleLayout({
       lang={locale}
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
       suppressHydrationWarning
+      className={locale === 'ar' ? cairo.variable : inter.variable}
     >
       <head>
         {/* Dark-mode FOUC prevention — runs before first paint */}
@@ -85,10 +100,12 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className="relative">
+      <body className="relative flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
           <BouncingBalls />
-          {children}
+          <div className="flex-1">
+            {children}
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

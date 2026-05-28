@@ -2,33 +2,36 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { SupportFaq, getSupportFaqs, listenSupportFaqs } from '@/lib/firebase/content';
+import { getSupportFaqs as getSupportFaqsFromAPI, SupportFaq } from '@/lib/api';
 
 export default function SupportFaqsFromFirestore() {
   const t = useTranslations('faqs');
   const locale = useLocale();
   const [faqs, setFaqs] = useState<SupportFaq[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // fetch (same as before)
+  // fetch from backend API
   useEffect(() => {
-    let unsub: (() => void) | null = null;
     setLoading(true);
-    getSupportFaqs().then((items) => {
+    setError(null);
+    getSupportFaqsFromAPI(locale).then((items) => {
       setFaqs(items);
       setLoading(false);
+    }).catch((error) => {
+      console.error('Error fetching FAQs:', error);
+      setError(error instanceof Error ? error.message : 'Failed to load FAQs');
+      setLoading(false);
     });
-    unsub = listenSupportFaqs((items) => setFaqs(items));
-    return () => { unsub && unsub(); };
-  }, []);
+  }, [locale]);
 
   const localized = useMemo(() => {
     return faqs.map((f) => ({
       id: f.id,
-      q: f.question?.[locale] ?? f.question?.en ?? '',
-      a: f.answer?.[locale]  ?? f.answer?.en  ?? '',
+      q: f.question,
+      a: f.answer,
     }));
-  }, [faqs, locale]);
+  }, [faqs]);
 
   // refs & handlers
   const detailsRefs = useRef<HTMLDetailsElement[]>([]);
@@ -145,13 +148,18 @@ export default function SupportFaqsFromFirestore() {
       <h2 className="h2 section-title-lg">{t('title')}</h2>
 
       {loading && localized.length === 0 ? (
-        <div className="card">Loading…</div>
+        <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">Loading…</div>
+      ) : error ? (
+        <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">
+          <p className="text-red-500 font-semibold">Error: {error}</p>
+          <p className="text-sm mt-2 opacity-70">Please ensure NEXT_PUBLIC_API_URL is configured in .env.local</p>
+        </div>
       ) : (
         <div className="faq-list">
           {localized.map((it, i) => (
             <details
               key={it.id}
-              className="faq-item card gradient-border"
+              className="faq-item card gradient-border backdrop-blur-md bg-white/70 dark:bg-gray-900/70"
               ref={(el) => { if (el) detailsRefs.current[i] = el; }}
             >
               <summary className="faq-q h3">
