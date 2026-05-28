@@ -1,58 +1,58 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
-
-type PlanKey = 'free' | 'pro' | 'family'
+import { useTranslations, useLocale } from 'next-intl'
+import { useEffect, useState } from 'react'
+import { getSubscriptionPlans, SubscriptionPlan } from '@/lib/api'
 
 type Plan = {
-  key: PlanKey
-  highlight?: boolean
-  price: string
-  per: string
+  id: string
+  title: string
+  subtitle: string
+  badge: string
   features: string[]
-  ctaKey: string
+  periodShort: string | null
+  sort: number
+  productId: string | null
+  highlight: boolean
 }
 
 export default function Pricing() {
   const t = useTranslations('pricing')
+  const locale = useLocale()
+  const [plans, setPlans] = useState<Plan[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const plans: Plan[] = [
-    {
-      key: 'free',
-      price: '0',
-      per: t('perMonth'),
-      features: [
-        t('features.oneFamily'),
-        t('features.basicTasks'),
-        t('features.notifications'),
-      ],
-      ctaKey: 'cta.startFree',
-    },
-    {
-      key: 'pro',
-      highlight: true,
-      price: '4.99',
-      per: t('perMonth'),
-      features: [
-        t('features.unlimitedMembers'),
-        t('features.advancedStreaks'),
-        t('features.prioritySupport'),
-        t('features.secureChat'),
-      ],
-      ctaKey: 'cta.upgrade',
-    },
-    {
-      key: 'family',
-      price: '9.99',
-      per: t('perMonth'),
-      features: [
-        t('features.multipleFamilies'),
-        t('features.sharedCatalog'),
-        t('features.earlyAccess'),
-      ],
-      ctaKey: 'cta.contact',
-    },
-  ]
+  useEffect(() => {
+    setLoading(true)
+    setError(null)
+    getSubscriptionPlans(locale)
+      .then((apiPlans) => {
+        const mappedPlans: Plan[] = apiPlans
+          .sort((a, b) => a.sort - b.sort)
+          .map((apiPlan) => {
+            const features = apiPlan.features[locale as keyof typeof apiPlan.features] || apiPlan.features.en
+            return {
+              id: apiPlan.id,
+              title: apiPlan.title[locale as keyof typeof apiPlan.title] || apiPlan.title.en,
+              subtitle: apiPlan.subtitle[locale as keyof typeof apiPlan.subtitle] || apiPlan.subtitle.en,
+              badge: apiPlan.badge[locale as keyof typeof apiPlan.badge] || apiPlan.badge.en,
+              features: Array.isArray(features) ? features : [],
+              periodShort: apiPlan.periodShort ? (apiPlan.periodShort[locale as keyof typeof apiPlan.periodShort] || apiPlan.periodShort.en) : null,
+              sort: apiPlan.sort,
+              productId: apiPlan.productId,
+              highlight: apiPlan.sort === 1, // Family Pro is highlighted
+            }
+          })
+        setPlans(mappedPlans)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error('Error fetching subscription plans:', err)
+        setError(err instanceof Error ? err.message : 'Failed to load plans')
+        setLoading(false)
+      })
+  }, [locale])
 
   return (
     <section id="pricing" className="section alt relative overflow-hidden">
@@ -74,12 +74,17 @@ export default function Pricing() {
           <p className="opacity-80 mt-2 text-balance">{t('subtitle')}</p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {plans.map((p) => {
-            const isHighlight = p.highlight
-            return (
+        {loading ? (
+          <div className="text-center py-10">Loading...</div>
+        ) : error ? (
+          <div className="text-center py-10 text-red-500">Error: {error}</div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-3">
+            {plans.map((p) => {
+              const isHighlight = p.highlight
+              return (
               <div
-                key={p.key}
+                key={p.id}
                 className={[
                   'relative rounded-2xl p-6 md:p-7 transition-all duration-300 cursor-default',
                   isHighlight
@@ -94,30 +99,25 @@ export default function Pricing() {
               >
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xl font-semibold">{t(`plans.${p.key}.title`)}</h3>
-                  {p.key !== 'free' && (
+                  <h3 className="text-xl font-semibold">{p.title}</h3>
+                  {p.badge && (
                     <span
                       className={[
                         'ms-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium',
                         isHighlight ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-600',
                       ].join(' ')}
                     >
-                      {t('badge.trial')}
+                      {p.badge}
                     </span>
                   )}
                 </div>
 
-                {/* Price */}
-                <div className="text-4xl md:text-5xl font-bold tracking-tight">
-                  <span className={isHighlight ? '' : 'text-gray-900'}>${p.price}</span>
-                  <span
-                    className={`text-base font-medium opacity-80 ms-1 ${
-                      isHighlight ? 'text-white' : 'text-gray-600'
-                    }`}
-                  >
-                    {p.per}
-                  </span>
-                </div>
+                {/* Subtitle */}
+                {p.subtitle && (
+                  <p className={`text-sm mb-4 ${isHighlight ? 'text-white/80' : 'text-gray-600'}`}>
+                    {p.subtitle}
+                  </p>
+                )}
 
                 {/* Features */}
                 <ul
@@ -144,10 +144,10 @@ export default function Pricing() {
                     ].join(' ')}
                     href="#contact"
                   >
-                    {t(p.ctaKey)}
+                    {p.productId ? t('cta.upgrade') : t('cta.startFree')}
                   </a>
 
-                  {p.key !== 'free' && (
+                  {p.productId && (
                     <p className={`mt-2 text-xs ${isHighlight ? 'text-white/80' : 'text-gray-500'}`}>
                       {t('trialNote')}
                     </p>
@@ -155,8 +155,9 @@ export default function Pricing() {
                 </div>
               </div>
             )
-          })}
+            })}
         </div>
+        )}
       </div>
     </section>
   )

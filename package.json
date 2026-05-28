@@ -2,7 +2,7 @@
     "name": "neyome-landing",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev -p 3001",
         "build": "next build",
         "start": "next start -p 3102",
         "lint": "next lint"
