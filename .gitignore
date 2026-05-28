@@ -41,6 +41,9 @@ claudedocs/
 *.jpeg
 *.zip
 
+# Exception for logo
+!public/Neyome_logo.png
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
