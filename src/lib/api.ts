@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.neyome.com'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api/proxy'
 
 export interface SupportFaq {
   id: string
