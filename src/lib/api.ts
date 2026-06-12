@@ -40,12 +40,17 @@ export interface SubscriptionPlan {
     en: string
   }
   features: {
-    ar: string[]
-    de: string[]
-    en: string[]
-    backendId: string
+    ar?: string[]
+    de?: string[]
+    en?: string[]
+    backendId?: string
+    billing?: string
+    stripe?: { priceId?: string }
+    [key: string]: string[] | string | { priceId?: string } | undefined
   }
   productId: string | null
+  price?: number | string | null
+  currency?: string | null
   subtitle: {
     ar: string
     de: string
@@ -89,13 +94,14 @@ export async function getSubscriptionPlans(locale: string = 'en'): Promise<Subsc
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/public/subscription-plans`,
+      `${API_BASE_URL}/public/subscription-plans?limit=50&sortBy=sort&sortOrder=ASC`,
       {
         headers: {
           'Accept-Language': locale,
+          'X-Locale': locale,
         },
-        next: { revalidate: 3600 } // Cache for 1 hour
-      }
+        next: { revalidate: 3600 },
+      },
     )
 
     if (!response.ok) {
@@ -103,6 +109,10 @@ export async function getSubscriptionPlans(locale: string = 'en'): Promise<Subsc
     }
 
     const result: SubscriptionPlansResponse = await response.json()
+    if (!result.success || !result.data?.items) {
+      throw new Error(result.message || 'Failed to load subscription plans')
+    }
+
     return result.data.items
   } catch (error) {
     console.error('Error fetching subscription plans from backend API:', error)

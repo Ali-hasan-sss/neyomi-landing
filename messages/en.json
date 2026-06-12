@@ -78,6 +78,11 @@
     "title": "Simple pricing",
     "subtitle": "Start today with a 1-month free trial. Cancel anytime.",
     "perMonth": "/mo",
+    "priceFree": "Free",
+    "perPeriod": "Billed per {period}",
+    "loading": "Loading plans…",
+    "loadError": "Could not load pricing plans",
+    "empty": "No plans available right now.",
     "badge": { "trial": "1-month free" },
     "trialNote": "Includes 1-month free trial",
     "plans": {

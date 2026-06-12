@@ -93,7 +93,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
         </section>
 
         {/* PRICING */}
-        <Pricing />
+        <ErrorBoundary>
+          <Pricing />
+        </ErrorBoundary>
 
         {/* FAQS */}
         <section id="faqs" className="section">

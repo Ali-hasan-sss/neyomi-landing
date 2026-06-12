@@ -78,6 +78,11 @@
     "title": "Einfaches Preismodell",
     "subtitle": "Starte heute mit 1 Monat kostenlos. Jederzeit kündbar.",
     "perMonth": "/Mon.",
+    "priceFree": "Kostenlos",
+    "perPeriod": "Abrechnung pro {period}",
+    "loading": "Pläne werden geladen…",
+    "loadError": "Preispläne konnten nicht geladen werden",
+    "empty": "Derzeit sind keine Pläne verfügbar.",
     "badge": { "trial": "1 Monat gratis" },
     "trialNote": "Enthält 1 Monat kostenlosen Test",
     "plans": {
