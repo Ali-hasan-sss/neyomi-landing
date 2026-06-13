@@ -8,6 +8,20 @@ const nextConfig = {
   // DevTools browser extension throws "Missing ActionQueueContext" and crashes
   // the router. Re-enable after upgrading to Next.js 15+.
   reactStrictMode: false,
+  async rewrites() {
+    const apiUrl = (
+      process.env.API_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      'https://api.neyome.com'
+    ).replace(/\/$/, '')
+
+    return [
+      {
+        source: '/api/proxy/:path*',
+        destination: `${apiUrl}/:path*`,
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

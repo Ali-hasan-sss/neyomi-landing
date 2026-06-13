@@ -152,7 +152,7 @@ export default function SupportFaqsFromFirestore() {
       ) : error ? (
         <div className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">
           <p className="text-red-500 font-semibold">Error: {error}</p>
-          <p className="text-sm mt-2 opacity-70">Please ensure NEXT_PUBLIC_API_URL is configured in .env.local</p>
+          <p className="text-sm mt-2 opacity-70">Please ensure API_URL is configured in .env.local</p>
         </div>
       ) : (
         <div className="faq-list">

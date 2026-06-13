@@ -1,4 +1,14 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.neyome.com'
+/** Server-side: direct API call (no CORS). Browser: same-origin proxy to avoid CORS. */
+function getApiBaseUrl(): string {
+  if (typeof window !== 'undefined') {
+    return '/api/proxy'
+  }
+  const url = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+  if (!url) {
+    throw new Error('API_URL is not configured in .env.local')
+  }
+  return url.replace(/\/$/, '')
+}
 
 export interface SupportFaq {
   id: string
@@ -88,13 +98,11 @@ export interface SubscriptionPlansResponse {
 }
 
 export async function getSubscriptionPlans(locale: string = 'en'): Promise<SubscriptionPlan[]> {
-  if (!API_BASE_URL) {
-    throw new Error('NEXT_PUBLIC_API_URL is not configured in .env.local')
-  }
+  const apiBaseUrl = getApiBaseUrl()
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/public/subscription-plans?limit=50&sortBy=sort&sortOrder=ASC`,
+      `${apiBaseUrl}/public/subscription-plans?limit=50&sortBy=sort&sortOrder=ASC`,
       {
         headers: {
           'Accept-Language': locale,
@@ -121,13 +129,11 @@ export async function getSubscriptionPlans(locale: string = 'en'): Promise<Subsc
 }
 
 export async function getSupportFaqs(locale: string = 'en', page: number = 1, limit: number = 50): Promise<SupportFaq[]> {
-  if (!API_BASE_URL) {
-    throw new Error('NEXT_PUBLIC_API_URL is not configured in .env.local')
-  }
+  const apiBaseUrl = getApiBaseUrl()
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/public/support-faqs?page=${page}&limit=${limit}`,
+      `${apiBaseUrl}/public/support-faqs?page=${page}&limit=${limit}`,
       {
         headers: {
           'X-Locale': locale,
@@ -149,13 +155,11 @@ export async function getSupportFaqs(locale: string = 'en', page: number = 1, li
 }
 
 export async function getPage(type: 'privacy' | 'terms', locale: string = 'en'): Promise<PageData> {
-  if (!API_BASE_URL) {
-    throw new Error('NEXT_PUBLIC_API_URL is not configured in .env.local')
-  }
+  const apiBaseUrl = getApiBaseUrl()
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/public/pages/${type}`,
+      `${apiBaseUrl}/public/pages/${type}`,
       {
         headers: {
           'Accept-Language': locale,

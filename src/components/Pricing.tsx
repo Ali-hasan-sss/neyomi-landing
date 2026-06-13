@@ -1,9 +1,67 @@
 'use client'
 
 import { useTranslations, useLocale } from 'next-intl'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getSubscriptionPlans } from '@/lib/api'
 import { mapSubscriptionPlans, type DisplayPlan } from '@/lib/plans'
+
+function ScrollingFeatures({ features, isHighlight }: { features: string[]; isHighlight: boolean }) {
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const [shouldScroll, setShouldScroll] = useState(false)
+  const [duration, setDuration] = useState(10)
+
+  useEffect(() => {
+    if (!wrapperRef.current || !listRef.current) return
+    const overflows = listRef.current.scrollHeight > wrapperRef.current.clientHeight
+    setShouldScroll(overflows)
+    if (overflows) {
+      setDuration(Math.max(8, listRef.current.scrollHeight / 25))
+    }
+  }, [features])
+
+  const listClass = `space-y-2 text-sm leading-6 ${isHighlight ? 'text-white/90' : 'text-gray-700'}`
+
+  const items = features.map((f, idx) => (
+    <li key={idx} className="flex items-start gap-2">
+      <span aria-hidden className="mt-1">✅</span>
+      <span className="text-start">{f}</span>
+    </li>
+  ))
+
+  return (
+    <div ref={wrapperRef} className="relative flex-1 min-h-0 overflow-hidden mt-5">
+      <div
+        style={shouldScroll ? { animation: `features-scroll ${duration}s linear infinite` } : {}}
+        onMouseEnter={e => { if (shouldScroll) (e.currentTarget as HTMLElement).style.animationPlayState = 'paused' }}
+        onMouseLeave={e => { if (shouldScroll) (e.currentTarget as HTMLElement).style.animationPlayState = 'running' }}
+      >
+        <ul ref={listRef} className={listClass}>{items}</ul>
+        {shouldScroll && (
+          <ul className={`${listClass} pt-2`} aria-hidden>{items}</ul>
+        )}
+      </div>
+
+      {shouldScroll && (
+        <div
+          className="absolute bottom-0 left-0 right-0 h-8 pointer-events-none"
+          style={{
+            background: isHighlight
+              ? 'linear-gradient(to top, rgba(99,30,220,0.85), transparent)'
+              : 'linear-gradient(to top, rgba(255,255,255,0.9), transparent)',
+          }}
+        />
+      )}
+
+      <style>{`
+        @keyframes features-scroll {
+          0%   { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+      `}</style>
+    </div>
+  )
+}
 
 export default function Pricing() {
   const t = useTranslations('pricing')
@@ -56,14 +114,14 @@ export default function Pricing() {
         ) : plans.length === 0 ? (
           <div className="text-center py-10 opacity-70">{t('empty')}</div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3 items-stretch">
             {plans.map((p) => {
               const isHighlight = p.highlight
               return (
                 <div
                   key={p.id}
                   className={[
-                    'relative rounded-2xl p-6 md:p-7 transition-all duration-300 cursor-default',
+                    'relative rounded-2xl p-6 md:p-7 transition-all duration-300 cursor-default flex flex-col',
                     isHighlight
                       ? 'shadow-xl text-white hover:-translate-y-2.5 hover:-rotate-[0.2deg]'
                       : 'bg-white/70 backdrop-blur shadow-md hover:-translate-y-2',
@@ -107,20 +165,9 @@ export default function Pricing() {
                     )}
                   </div>
 
-                  <ul
-                    className={`mt-5 space-y-2 text-sm leading-6 ${
-                      isHighlight ? 'text-white/90' : 'text-gray-700'
-                    }`}
-                  >
-                    {p.features.map((f, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span aria-hidden className="mt-1">✅</span>
-                        <span className="text-start">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <ScrollingFeatures features={p.features} isHighlight={isHighlight} />
 
-                  <div className="mt-6">
+                  <div className="mt-6 shrink-0 flex flex-col-reverse gap-2">
                     <a
                       className={[
                         'btn w-full rounded-xl py-2.5 text-center font-semibold transition',
@@ -134,7 +181,7 @@ export default function Pricing() {
                     </a>
 
                     {p.productId && (
-                      <p className={`mt-2 text-xs ${isHighlight ? 'text-white/80' : 'text-gray-500'}`}>
+                      <p className={`text-xs ${isHighlight ? 'text-white/80' : 'text-gray-500'}`}>
                         {t('trialNote')}
                       </p>
                     )}
