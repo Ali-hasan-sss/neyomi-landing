@@ -115,6 +115,15 @@
     "about": "About",
     "privacy": "Privacy",
     "terms": "Terms",
-    "faqs": "FAQs"
+    "faqs": "FAQs",
+    "legalTitle": "Legal Information (Impressum)",
+    "legalCompany": "Genix Tech GmbH",
+    "legalRegister": "Amtsgericht Charlottenburg — Commercial Register Section B",
+    "legalHrb": "HRB 279128 B",
+    "legalTaxNumber": "Tax Number (St.-Nr.) 27/304/00089",
+    "legalVatId": "VAT ID DE459049439",
+    "legalManagingDirector": "Managing Director: Mouhanad Dawood",
+    "legalRegisteredOffice": "Registered Office: Berlin",
+    "legalAddress": "Bundesallee 38, 10717 Berlin, Germany"
   }
 }
