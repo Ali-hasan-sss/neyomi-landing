@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { getPage } from '@/lib/api';
-import { sanitizeHtml } from '@/lib/sanitize';
+import RichHtml from '@/components/RichHtml';
 
 export default function PolicyFromFirestore({ type }: { type: 'privacy' | 'terms' }) {
   const locale = useLocale();
@@ -54,7 +54,9 @@ export default function PolicyFromFirestore({ type }: { type: 'privacy' | 'terms
             <p className="text-sm mt-2 opacity-70">Please ensure API_URL is configured in .env.local</p>
           </div>
         ) : (
-          <article className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70" dangerouslySetInnerHTML={{ __html: sanitizeHtml(block.body || '') }} />
+          <article className="card backdrop-blur-md bg-white/70 dark:bg-gray-900/70">
+            <RichHtml html={block.body || ''} />
+          </article>
         )}
       </div>
     </section>
