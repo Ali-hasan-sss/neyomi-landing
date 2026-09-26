@@ -60,6 +60,8 @@ export interface SubscriptionPlan {
   }
   productId: string | null
   price?: number | string | null
+  monthlyPrice?: number | string | null
+  yearlyPrice?: number | string | null
   currency?: string | null
   subtitle: {
     ar: string

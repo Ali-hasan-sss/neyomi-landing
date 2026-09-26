@@ -1,5 +1,7 @@
 import type { SubscriptionPlan } from './api'
 
+export type BillingInterval = 'month' | 'year'
+
 export type DisplayPlan = {
   id: string
   title: string
@@ -7,6 +9,8 @@ export type DisplayPlan = {
   badge: string
   features: string[]
   price: number | null
+  monthlyPrice: number | null
+  yearlyPrice: number | null
   currency: string
   priceLabel: string
   periodShort: string | null
@@ -62,12 +66,35 @@ export function getPlanFeatureList(features: PlanFeatures, locale: string): stri
     .flat()
 }
 
+function positivePrice(value: number | null): number | null {
+  return value != null && value > 0 ? value : null
+}
+
+/** Monthly and yearly amounts. A legacy single `price` maps to one interval. */
+export function resolvePlanPrices(plan: SubscriptionPlan): { monthly: number | null; yearly: number | null } {
+  const hasMonthly = plan.monthlyPrice != null && plan.monthlyPrice !== ''
+  const hasYearly = plan.yearlyPrice != null && plan.yearlyPrice !== ''
+  if (hasMonthly || hasYearly) {
+    return {
+      monthly: positivePrice(parsePlanPrice(plan.monthlyPrice)),
+      yearly: positivePrice(parsePlanPrice(plan.yearlyPrice)),
+    }
+  }
+
+  const legacy = positivePrice(parsePlanPrice(plan.price))
+  if (legacy == null) return { monthly: null, yearly: null }
+  const yearlyLegacy =
+    plan.features?.billing === 'yearly' || /yearly|annual/i.test(plan.features?.backendId ?? '')
+  return yearlyLegacy ? { monthly: null, yearly: legacy } : { monthly: legacy, yearly: null }
+}
+
 export function mapSubscriptionPlan(
   plan: SubscriptionPlan,
   locale: string,
   freeLabel = 'Free',
 ): DisplayPlan {
-  const price = parsePlanPrice(plan.price)
+  const { monthly, yearly } = resolvePlanPrices(plan)
+  const price = monthly ?? yearly
   const currency = (plan.currency ?? 'USD').toUpperCase()
 
   return {
@@ -77,6 +104,8 @@ export function mapSubscriptionPlan(
     badge: getLocalizedText(plan.badge, locale),
     features: getPlanFeatureList(plan.features, locale),
     price,
+    monthlyPrice: monthly,
+    yearlyPrice: yearly,
     currency,
     priceLabel: formatPlanPrice(price, currency, locale, freeLabel),
     periodShort: plan.periodShort ? getLocalizedText(plan.periodShort, locale) : null,

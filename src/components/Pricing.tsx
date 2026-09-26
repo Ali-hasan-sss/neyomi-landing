@@ -3,7 +3,7 @@
 import { useTranslations, useLocale } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { getSubscriptionPlans } from '@/lib/api'
-import { mapSubscriptionPlans, type DisplayPlan } from '@/lib/plans'
+import { formatPlanPrice, mapSubscriptionPlans, type BillingInterval, type DisplayPlan } from '@/lib/plans'
 
 function ScrollingFeatures({ features, isHighlight }: { features: string[]; isHighlight: boolean }) {
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -69,6 +69,8 @@ export default function Pricing() {
   const [plans, setPlans] = useState<DisplayPlan[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [interval, setInterval] = useState<BillingInterval>('month')
+  const hasYearlyPlans = plans.some((plan) => plan.yearlyPrice != null)
 
   useEffect(() => {
     setLoading(true)
@@ -104,6 +106,36 @@ export default function Pricing() {
           <p className="opacity-80 mt-2 text-balance">{t('subtitle')}</p>
         </div>
 
+        {!loading && !error && hasYearlyPlans && (
+          <div className="mb-8 flex justify-center">
+            <div
+              className="inline-flex rounded-full bg-white/80 p-1 shadow-sm ring-1 ring-violet-200"
+              role="group"
+              aria-label={t('billingToggle')}
+            >
+              {(['month', 'year'] as const).map((value) => {
+                const selected = interval === value
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => setInterval(value)}
+                    className={[
+                      'rounded-full px-5 py-2 text-sm font-semibold transition',
+                      selected
+                        ? 'bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow'
+                        : 'text-gray-600 hover:text-violet-700',
+                    ].join(' ')}
+                  >
+                    {value === 'month' ? t('monthly') : t('yearly')}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
         {loading ? (
           <div className="text-center py-10 opacity-70">{t('loading')}</div>
         ) : error ? (
@@ -117,6 +149,15 @@ export default function Pricing() {
           <div className="grid gap-6 md:grid-cols-3 items-stretch">
             {plans.map((p) => {
               const isHighlight = p.highlight
+              const showYearly = interval === 'year' && p.yearlyPrice != null
+              const amount = showYearly ? p.yearlyPrice : (p.monthlyPrice ?? p.yearlyPrice)
+              const periodLabel =
+                amount == null
+                  ? null
+                  : showYearly || (p.monthlyPrice == null && p.yearlyPrice != null)
+                    ? t('perYear')
+                    : t('perMonth')
+              const priceLabel = formatPlanPrice(amount, p.currency, locale, t('priceFree'))
               return (
                 <div
                   key={p.id}
@@ -153,14 +194,14 @@ export default function Pricing() {
                   )}
 
                   <div className={`mb-4 ${isHighlight ? 'text-white' : 'text-violet-700'}`}>
-                    <span className="text-3xl font-bold tracking-tight">{p.priceLabel}</span>
-                    {p.periodShort && (
+                    <span className="text-3xl font-bold tracking-tight">{priceLabel}</span>
+                    {periodLabel && (
                       <span
                         className={`ms-1 text-sm font-medium ${
                           isHighlight ? 'text-white/80' : 'text-gray-500'
                         }`}
                       >
-                        / {p.periodShort}
+                        {periodLabel}
                       </span>
                     )}
                   </div>
