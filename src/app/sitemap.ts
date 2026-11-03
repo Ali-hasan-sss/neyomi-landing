@@ -3,7 +3,7 @@ import { locales } from '@/i18n/config'
 
 const BASE_URL = 'https://neyome.app'
 
-const ROUTES = ['', '/about', '/features', '/privacy', '/terms']
+const ROUTES = ['', '/about', '/features', '/privacy', '/terms', '/delete-account']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []

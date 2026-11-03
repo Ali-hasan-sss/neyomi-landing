@@ -25,6 +25,7 @@ export default function Footer() {
             <Link href="/about" className="foot-link">{t('about')}</Link>
             <Link href="/privacy" className="foot-link">{t('privacy')}</Link>
             <Link href="/terms" className="foot-link">{t('terms')}</Link>
+            <Link href="/delete-account" className="foot-link">{t('deleteAccount')}</Link>
             <Link href="/#faqs" className="foot-link">{t('faqs')}</Link>
           </nav>
 
